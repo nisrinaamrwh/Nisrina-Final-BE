@@ -13,6 +13,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="uil uil-youtube me-1"></i>Movie</a>
                 </li>
+                @if (Auth::check())
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i
+                                class="uil uil-user me-1"></i>{{ Auth::user()->name }}</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/register') }}"><i
+                                class="uil uil-user-plus me-1"></i>Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/login') }}"><i
+                                class="uil uil-sign-in-alt me-1"></i>Login</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

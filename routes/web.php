@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+
+// AUTHENTICATION
+Route::get('/login', 'App\Http\Controllers\AuthController@viewLogin')->middleware('guest');
+Route::get('/register', 'App\Http\Controllers\AuthController@viewRegister');
+Route::post('/register', 'App\Http\Controllers\AuthController@prosesRegister');
+Route::post('/login', 'App\Http\Controllers\AuthController@prosesLogin');
