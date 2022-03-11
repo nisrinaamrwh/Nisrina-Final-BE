@@ -14,12 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('index');
+});
+Auth::routes();
+
+// ROUTES KLO UDAH LOGIN
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+
+// ADMIN ROUTES
+Route::group(['middleware' => 'RoleAdmin'], function () {
+    Route::get('/admin', 'App\Http\Controllers\HomeController@admin');
 });
 
-
-// AUTHENTICATION
-Route::get('/login', 'App\Http\Controllers\AuthController@viewLogin')->middleware('guest');
-Route::get('/register', 'App\Http\Controllers\AuthController@viewRegister');
-Route::post('/register', 'App\Http\Controllers\AuthController@prosesRegister');
-Route::post('/login', 'App\Http\Controllers\AuthController@prosesLogin');
+// MEMBER ROUTES
+Route::group(['middleware' => 'RoleMember'], function () {
+    Route::get('/member', 'App\Http\Controllers\HomeController@member');
+});
