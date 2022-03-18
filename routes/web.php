@@ -24,6 +24,9 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 // ADMIN ROUTES
 Route::group(['middleware' => 'RoleAdmin'], function () {
     Route::get('/admin', 'App\Http\Controllers\HomeController@admin');
+
+    Route::get('/genre', 'App\Http\Controllers\GenreController@index');
+    Route::post('/genre', 'App\Http\Controllers\GenreController@store')->name('storeGenre');
 });
 
 // MEMBER ROUTES
