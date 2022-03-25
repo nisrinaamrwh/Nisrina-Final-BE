@@ -1,25 +1,25 @@
 @extends('layouts.app')
-@section('title', 'Manage Genre | MovieApp')
+@section('title', 'Manage Movie | MovieApp')
 
 @section('content')
-    {{-- CREATE GENRE --}}
-    @include('genres.create')
+    {{-- CREATE MOVIE --}}
+    @include('movies.create')
 
     <div class="container mt-5">
         <div class="col-md-7 bg-light rounded p-3">
             {{-- HEADER --}}
-            <h3 class="text-dark">Manage Genres</h3>
+            <h3 class="text-dark">Manage Movies</h3>
             <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni facere, consectetur
                 maiores maxime laborum</p>
             <hr>
-            
+
             {{-- TABLE --}}
-            <a href="#" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#createGenreModal"><i
-                    class="uil uil-plus-circle me-1"></i>Buat Genre</a>
+            <a href="#" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#createMovieModal"><i
+                    class="uil uil-plus-circle me-1"></i>Create Movie</a>
             @if (session('success_msg'))
                 <div class="alert alert-success mt-3">{{ session('success_msg') }}</div>
             @endif
-            <table class="table table-success table-striped mt-3">
+            {{-- <table class="table table-success table-striped mt-3">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -45,7 +45,7 @@
                         </tr>
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
         </div>
     </div>
 @endsection

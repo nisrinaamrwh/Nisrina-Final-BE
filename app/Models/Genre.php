@@ -14,4 +14,10 @@ class Genre extends Model
 
     // Kebalikan dari fillable
     // protected $guarded = ['id'];
+
+    public function movie()
+    {
+        // return $this->hasMany('Nama Model', 'foreign_key => genre_id ditable movie');
+        return $this->hasMany('App\Models\Movie', 'genre_id');
+    }
 }

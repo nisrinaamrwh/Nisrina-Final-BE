@@ -28,4 +28,37 @@ class GenreController extends Controller
         // Redirect kalau berhasil
         return redirect('/genre')->with('success_msg', 'Genre berhasil dibuat');
     }
+
+    public function edit($id)
+    {
+        $genre = Genre::findOrFail($id);
+        return view('genres.edit', ['genre' => $genre]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi
+        $request->validate([
+            'title' => 'required|min:3',
+        ]);
+
+        // Proses Update
+        $genre = Genre::findOrFail($id);
+        $genre->update([
+            'title' => $request->title,
+        ]);
+
+        // Redirect kalau berhasil
+        return redirect('/genre')->with('success_msg', 'Genre berhasil diubah');
+    }
+
+    public function delete($id)
+    {
+        // Proses Delete
+        $genre = Genre::findOrFail($id);
+        $genre->delete();
+
+        // Redirect kalau berhasil
+        return redirect('/genre')->with('success_msg', 'Genre berhasil dihapus');
+    }
 }
