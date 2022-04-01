@@ -1,6 +1,6 @@
 <div class="modal fade" id="createMovieModal" tabindex="-1" aria-labelledby="createMovieModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="createMovieModalLabel"><i class="uil uil-plus-circle me-1"></i>Buat Movie
@@ -8,11 +8,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('storeMovie') }}" method="POST">
+                <form action="{{ route('storeMovie') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label>Thumbnail</label>
-                        <input type="file" class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Judul Film..." name="thumbnail" value="{{ old('thumbnail') }}">
+                        <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
+                            placeholder="Judul Film..." name="thumbnail" value="{{ old('thumbnail') }}">
                         @error('thumbnail')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -46,9 +47,9 @@
                     <div class="form-group">
                         <label>Genre</label>
                         <select name="genre" class="form-control @error('genre') is-invalid @enderror">
-                            <option value="">Horror</option>
-                            <option value="">Anime</option>
-                            <option value="">Action</option>
+                            @foreach ($genres as $genre)
+                                <option value="{{ $genre->id }}">{{ $genre->title }}</option>
+                            @endforeach
                         </select>
                         @error('genre')
                             <small class="text-danger">{{ $message }}</small>

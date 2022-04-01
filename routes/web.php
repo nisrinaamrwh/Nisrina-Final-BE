@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'App\Http\Controllers\PageController@index');
 Auth::routes();
+
+// PAGES
+Route::get('/movie', 'App\Http\Controllers\MovieController@index');
 
 // ROUTES KLO UDAH LOGIN
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -31,13 +32,15 @@ Route::group(['middleware' => 'RoleAdmin'], function () {
     Route::get('/genre/{id}', 'App\Http\Controllers\GenreController@edit')->name('editGenre');
     Route::put('/genre/{id}', 'App\Http\Controllers\GenreController@update')->name('updateGenre');
     Route::delete('/genre/{id}', 'App\Http\Controllers\GenreController@delete')->name('deleteGenre');
-
-    // 2. Movie
-    Route::get('/movie', 'App\Http\Controllers\MovieController@index');
-    Route::post('/movie', 'App\Http\Controllers\MovieController@store')->name('storeMovie');
 });
 
 // MEMBER ROUTES
 Route::group(['middleware' => 'RoleMember'], function () {
     Route::get('/member', 'App\Http\Controllers\HomeController@member');
+
+    // 2. Movie
+    Route::post('/movie', 'App\Http\Controllers\MovieController@store')->name('storeMovie');
+    Route::get('/movie/{id}', 'App\Http\Controllers\MovieController@edit')->name('editMovie');
+    Route::put('/movie/{id}', 'App\Http\Controllers\MovieController@update')->name('updateMovie');
+    Route::delete('/movie/{id}', 'App\Http\Controllers\MovieController@delete')->name('deleteMovie');
 });
