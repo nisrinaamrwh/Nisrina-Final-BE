@@ -46,6 +46,11 @@
                                     <span class="d-block">{{ $movie->title }}</span>
                                     <span class="badge bg-dark me-2">{{ $movie->genre->title }}</span>
                                     <span class="badge bg-primary">{{ $movie->tahun_rilis }}</span>
+                                    @if ($movie->status == 'Pending')
+                                        <span class="badge bg-warning"><i class="uil uil-hourglass me-1"></i>Menunggu Persetujuan</span>
+                                    @else
+                                        <span class="badge bg-success"><i class="uil uil-check-circle me-1"></i>Dipublikasikan</span>
+                                    @endif
                                 </td>
                                 <td>{{ $movie->description }}</td>
                                 <td>{{ $movie->tahun_rilis }}</td>
@@ -55,11 +60,20 @@
                                         <a href="{{ route('editMovie', $movie->id) }}" class="text-primary"><i
                                                 class="uil uil-edit"></i></a>
                                     @endif
+                                    <a href="" class="text-primary"
+                                        onclick="event.preventDefault();document.getElementById('accept-form-'+{{ $movie->id }}).submit()">
+                                        <i class="uil uil-check-circle"></i>
+                                        <form action="{{ route('acceptMovie', $movie->id) }}" method="POST"
+                                            id="accept-form-{{ $movie->id }}" class="d-none">
+                                            @csrf
+                                            @method('PUT')
+                                        </form>
+                                    </a>
                                     <a href="" class="text-danger"
-                                        onclick="event.preventDefault();document.getElementById('delete-form').submit()">
+                                        onclick="event.preventDefault();document.getElementById('delete-form-'+{{ $movie->id }}).submit()">
                                         <i class="uil uil-trash-alt"></i>
                                         <form action="{{ route('deleteMovie', $movie->id) }}" method="POST"
-                                            id="delete-form" class="d-none">
+                                            id="delete-form-{{ $movie->id }}" class="d-none">
                                             @csrf
                                             @method('DELETE')
                                         </form>

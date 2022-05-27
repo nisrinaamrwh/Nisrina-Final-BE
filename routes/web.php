@@ -32,6 +32,9 @@ Route::group(['middleware' => 'RoleAdmin'], function () {
     Route::get('/genre/{id}', 'App\Http\Controllers\GenreController@edit')->name('editGenre');
     Route::put('/genre/{id}', 'App\Http\Controllers\GenreController@update')->name('updateGenre');
     Route::delete('/genre/{id}', 'App\Http\Controllers\GenreController@delete')->name('deleteGenre');
+
+    // 2. Accept Movie
+    Route::put('/movie/accept/{id}', 'App\Http\Controllers\MovieController@acceptMovie')->name('acceptMovie');
 });
 
 // MEMBER ROUTES

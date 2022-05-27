@@ -134,4 +134,12 @@ class MovieController extends Controller
 
         return redirect('/movie')->with('success_msg', 'Movie berhasil dihapus');
     }
+
+    public function acceptMovie($id)
+    {
+        Movie::findOrFail($id)->update([
+            'status' => 'Accepted'
+        ]);
+        return redirect('/movie')->with('success_msg', 'Movie berhasil dipublikasikan');
+    }
 }
