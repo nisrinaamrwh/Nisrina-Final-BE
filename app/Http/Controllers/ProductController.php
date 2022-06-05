@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
-use App\Models\Movie;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class MovieController extends Controller
+class ProductController extends Controller
 {
     public function index()
     {
-        $genres = Genre::all();
+        $categories = Category::all();
         // if(Auth::user()->role == 'Member'){
         //     $movies = Movie::where('user_id', Auth::user()->id)->get();
         // }else{
         //     $movies = Movie::all();
         // }
-        $movies = Auth::user()->role == 'Member' ? Movie::where('user_id', Auth::user()->id)->get() : Movie::all();
-        return view('movies.index', [
-            'genres' => $genres,
-            'movies' => $movies
+        $products = Auth::user()->role == 'Member' ? Product::where('user_id', Auth::user()->id)->get() : Product::all();
+        return view('products.index', [
+            'categories' => $categories,
+            'products' => $products
         ]);
     }
 
@@ -34,7 +34,8 @@ class MovieController extends Controller
             'title' => 'required|min:5',
             'description' => 'required|min:10|max:300',
             'tahun_rilis' => 'required',
-            'genre' => 'required'
+            'category' => 'required',
+            'harga'=>'required'
         ]);
 
         // File Processing
@@ -43,28 +44,29 @@ class MovieController extends Controller
         $fileName = pathinfo($fullFileName)['filename'];
         $extension = $files->getClientOriginalExtension();
         $thumbnail = $fileName . '-' . date('YmdHis') . '.' . $extension;
-        $files->storeAs('public/movies/', $thumbnail);
+        $files->storeAs('public/products/', $thumbnail);
 
         // Insert Data
-        Movie::Create([
+        Product::Create([
             'thumbnail' => $thumbnail,
             'title' => $request->title,
             'description' => $request->description,
             'tahun_rilis' => $request->tahun_rilis,
-            'genre_id' => $request->genre,
+            'harga' => $request->harga,
+            'genre_id' => $request->category,
             'user_id' => Auth::user()->id
         ]);
 
-        return redirect('/movie')->with('success_msg', 'Movie berhasil ditambahkan');
+        return redirect('/product')->with('success_msg', 'Barang berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $movie = Movie::findOrFail($id);
-        $genres = Genre::all();
-        return view('movies.edit', [
-            'movie' => $movie,
-            'genres' => $genres
+        $product = Product::findOrFail($id);
+        $category = Category::all();
+        return view('product.edit', [
+            'product' => $product,
+            'categories' => $categories
         ]);
     }
 
@@ -76,19 +78,21 @@ class MovieController extends Controller
                 'title' => 'required|min:5',
                 'description' => 'required|min:10|max:300',
                 'tahun_rilis' => 'required',
-                'genre' => 'required'
+                'category' => 'required',
+                'harga'=>'required'
             ]);
 
             // Temukan Movie yang mau di update dan update
-            $movie = Movie::findOrFail($id);
-            $movie->update([
+            $product = Product::findOrFail($id);
+            $product->update([
                 'title' => $request->title,
                 'description' => $request->description,
                 'tahun_rilis' => $request->tahun_rilis,
-                'genre_id' => $request->genre,
+                'harga' => $request->harga,
+                'genre_id' => $request->category,
             ]);
 
-            return redirect('/movie')->with('success_msg', 'Movie berhasil diedit');
+            return redirect('/product')->with('success_msg', 'Barang berhasil diedit');
         } else {
             // Validasi
             $request->validate([
@@ -96,7 +100,8 @@ class MovieController extends Controller
                 'title' => 'required|min:5',
                 'description' => 'required|min:10|max:300',
                 'tahun_rilis' => 'required',
-                'genre' => 'required'
+                'category' => 'required',
+                'harga'=>'required'
             ]);
 
             // File Processing
@@ -105,41 +110,42 @@ class MovieController extends Controller
             $fileName = pathinfo($fullFileName)['filename'];
             $extension = $files->getClientOriginalExtension();
             $thumbnail = $fileName . '-' . date('YmdHis') . '.' . $extension;
-            $files->storeAs('public/movies/', $thumbnail);
+            $files->storeAs('public/products/', $thumbnail);
 
             // Temukan Movie yang mau di update dan update
-            $movie = Movie::findOrFail($id);
-            if (Storage::exists('public/movies/' . $movie->thumbnail)) {
-                Storage::delete('public/movies/' . $movie->thumbnail);
+            $product = Product::findOrFail($id);
+            if (Storage::exists('public/products/' . $product->thumbnail)) {
+                Storage::delete('public/products/' . $product->thumbnail);
             }
-            $movie->update([
+            $product->update([
                 'thumbnail' => $thumbnail,
                 'title' => $request->title,
                 'description' => $request->description,
                 'tahun_rilis' => $request->tahun_rilis,
-                'genre_id' => $request->genre,
+                'harga' => $request->harga,
+                'genre_id' => $request->category,
             ]);
 
-            return redirect('/movie')->with('success_msg', 'Movie berhasil diedit');
+            return redirect('/product')->with('success_msg', 'Barang berhasil diedit');
         }
     }
 
     public function delete($id)
     {
-        $movie = Movie::findOrFail($id);
-        if (Storage::exists('public/movies/' . $movie->thumbnail)) {
-            Storage::delete('public/movies/' . $movie->thumbnail);
+        $product = Product::findOrFail($id);
+        if (Storage::exists('public/products/' . $product->thumbnail)) {
+            Storage::delete('public/products/' . $product->thumbnail);
         }
-        $movie->delete();
+        $product->delete();
 
-        return redirect('/movie')->with('success_msg', 'Movie berhasil dihapus');
+        return redirect('/product')->with('success_msg', 'Barang berhasil dihapus');
     }
 
-    public function acceptMovie($id)
+    public function acceptProduct($id)
     {
-        Movie::findOrFail($id)->update([
+        Product::findOrFail($id)->update([
             'status' => 'Accepted'
         ]);
-        return redirect('/movie')->with('success_msg', 'Movie berhasil dipublikasikan');
+        return redirect('/product')->with('success_msg', 'Barang berhasil ditambahkan');
     }
 }

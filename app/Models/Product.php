@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Movie extends Model
+class Product extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,10 @@ class Movie extends Model
     // Field yang gk boleh diisi
     protected $guarded = ['id'];
 
-    public function genre()
+    public function category()
     {
         // $this->belongsTo('Model Genre', 'yg ada di table movie', 'yg ada di table genre');
-        return $this->belongsTo('App\Models\Genre', 'genre_id', 'id');
+        return $this->belongsTo('App\Models\Category', 'genre_id', 'id');
     }
 
     public function user()

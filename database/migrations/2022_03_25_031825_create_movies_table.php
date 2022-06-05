@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('movies', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('thumbnail');
             $table->string('title');
             $table->string('description');
             $table->integer('tahun_rilis');
+            $table->integer('harga');
             $table->integer('genre_id');
             $table->integer('user_id');
             $table->enum('status', ['Pending', 'Accepted']);
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('movies');
+        Schema::dropIfExists('products');
     }
 };

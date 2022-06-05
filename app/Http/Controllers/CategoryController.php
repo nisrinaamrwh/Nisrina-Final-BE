@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
     public function index()
     {
-        $genres = Genre::all();
-        return view('genres.index', ['genres' => $genres]);
+        $categories = Category::all();
+        return view('categories.index', ['category' => $categories]);
     }
 
     public function store(Request $request)
@@ -21,18 +21,18 @@ class GenreController extends Controller
         ]);
 
         // Masukkan Ke Database
-        Genre::create([
+        Category::create([
             'title' => $request->title,
         ]);
 
         // Redirect kalau berhasil
-        return redirect('/genre')->with('success_msg', 'Genre berhasil dibuat');
+        return redirect('/category')->with('success_msg', 'Kategori berhasil dibuat');
     }
 
     public function edit($id)
     {
-        $genre = Genre::findOrFail($id);
-        return view('genres.edit', ['genre' => $genre]);
+        $category = Category::findOrFail($id);
+        return view('categories.edit', ['category' => $categories]);
     }
 
     public function update(Request $request, $id)
@@ -43,22 +43,22 @@ class GenreController extends Controller
         ]);
 
         // Proses Update
-        $genre = Genre::findOrFail($id);
-        $genre->update([
+        $category = Category::findOrFail($id);
+        $category->update([
             'title' => $request->title,
         ]);
 
         // Redirect kalau berhasil
-        return redirect('/genre')->with('success_msg', 'Genre berhasil diubah');
+        return redirect('/category')->with('success_msg', 'Kategori berhasil diubah');
     }
 
     public function delete($id)
     {
         // Proses Delete
-        $genre = Genre::findOrFail($id);
-        $genre->delete();
+        $category = Category::findOrFail($id);
+        $catefory->delete();
 
         // Redirect kalau berhasil
-        return redirect('/genre')->with('success_msg', 'Genre berhasil dihapus');
+        return redirect('/category')->with('success_msg', 'Kategori berhasil dihapus');
     }
 }

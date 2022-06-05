@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#"><i class="uil uil-film me-1"></i>MovieApp</a>
+        <a class="navbar-brand" href="#"><i class="uil uil-film me-1"></i>Musang</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -11,7 +11,7 @@
                     <a class="nav-link" href="{{ url('/') }}"><i class="uil uil-estate me-1"></i>Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="uil uil-youtube me-1"></i>Movie</a>
+                    <a class="nav-link" href="#"><i class="uil uil-youtube me-1"></i>Barang</a>
                 </li>
                 @guest
                     <li class="nav-item">
@@ -23,13 +23,13 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/movie') }}"><i class="uil uil-apps me-1"></i></i>Manage
-                            Movie</a>
+                        <a class="nav-link" href="{{ url('/product') }}"><i class="uil uil-apps me-1"></i></i>Manage
+                            Product</a>
                     </li>
                     @if (Auth::user()->role == 'Admin')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/genre') }}"><i
-                                    class="uil uil-location-arrow me-1"></i>Manage Genre</a>
+                            <a class="nav-link" href="{{ url('/category') }}"><i
+                                    class="uil uil-location-arrow me-1"></i>Manage kategori</a>
                         </li>
                     @endif
                     <li class="nav-item dropdown">

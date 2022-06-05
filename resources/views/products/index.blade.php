@@ -1,79 +1,78 @@
 @extends('layouts.app')
-@section('title', 'Manage Movie | MovieApp')
+@section('title', 'Manage Product | ProductApp')
 
 @section('content')
     {{-- CREATE MOVIE --}}
-    @include('movies.create', $genres)
+    @include('products.create', $categories)
 
     <div class="container mt-5">
         <div class="col-md-9 bg-light rounded p-3">
             {{-- HEADER --}}
-            <h3 class="text-dark">Manage Movies</h3>
+            <h3 class="text-dark">Manage Barang</h3>
             <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni facere, consectetur
                 maiores maxime laborum</p>
             <hr>
 
             {{-- TABLE --}}
             @if (Auth::user()->role == 'Member')
-                <a href="#" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#createMovieModal">
+                <a href="#" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#createProductModal">
                     <i class="uil uil-plus-circle me-1"></i>
-                    Create Movie
+                    Tambah Barang
                 </a>
             @endif
             @if (session('success_msg'))
                 <div class="alert alert-success mt-3">{{ session('success_msg') }}</div>
             @endif
 
-            @if ($movies->count() != 0)
+            @if ($products->count() != 0)
                 <table class="table table-success table-striped mt-3">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Thumbnail</th>
-                            <th>Movie Title</th>
+                            <th>Gambar</th>
+                            <th>Nama Barang</th>
                             <th>Description</th>
                             <th>Release Year</th>
-                            <th>Author</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($movies as $movie)
+                        @foreach ($products as $product)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
-                                <td><img src="{{ asset('storage/movies/' . $movie->thumbnail) }}" width="100"></td>
+                                <td><img src="{{ asset('storage/products/' . $product->thumbnail) }}" width="100"></td>
                                 <td>
-                                    <span class="d-block">{{ $movie->title }}</span>
-                                    <span class="badge bg-dark me-2">{{ $movie->genre->title }}</span>
-                                    <span class="badge bg-primary">{{ $movie->tahun_rilis }}</span>
-                                    @if ($movie->status == 'Pending')
+                                    <span class="d-block">{{ $product->title }}</span>
+                                    <span class="badge bg-dark me-2">{{ $product->category->title }}</span>
+                                    <span class="badge bg-primary">{{ $product->tahun_rilis }}</span>
+                                    @if ($product->status == 'Pending')
                                         <span class="badge bg-warning"><i class="uil uil-hourglass me-1"></i>Menunggu Persetujuan</span>
                                     @else
                                         <span class="badge bg-success"><i class="uil uil-check-circle me-1"></i>Dipublikasikan</span>
                                     @endif
                                 </td>
-                                <td>{{ $movie->description }}</td>
-                                <td>{{ $movie->tahun_rilis }}</td>
-                                <td>{{ $movie->user->name }}</td>
+                                <td>{{ $product->description }}</td>
+                                <td>{{ $poduct->tahun_rilis }}</td>
+                                <td>{{ $product->user->name }}</td>
                                 <td>
                                     @if (Auth::user()->role == 'Member')
-                                        <a href="{{ route('editMovie', $movie->id) }}" class="text-primary"><i
+                                        <a href="{{ route('editProduct', $product->id) }}" class="text-primary"><i
                                                 class="uil uil-edit"></i></a>
                                     @endif
                                     <a href="" class="text-primary"
-                                        onclick="event.preventDefault();document.getElementById('accept-form-'+{{ $movie->id }}).submit()">
+                                        onclick="event.preventDefault();document.getElementById('accept-form-'+{{ $product->id }}).submit()">
                                         <i class="uil uil-check-circle"></i>
-                                        <form action="{{ route('acceptMovie', $movie->id) }}" method="POST"
-                                            id="accept-form-{{ $movie->id }}" class="d-none">
+                                        <form action="{{ route('acceptProduct', $product->id) }}" method="POST"
+                                            id="accept-form-{{ $product->id }}" class="d-none">
                                             @csrf
                                             @method('PUT')
                                         </form>
                                     </a>
                                     <a href="" class="text-danger"
-                                        onclick="event.preventDefault();document.getElementById('delete-form-'+{{ $movie->id }}).submit()">
+                                        onclick="event.preventDefault();document.getElementById('delete-form-'+{{ $product->id }}).submit()">
                                         <i class="uil uil-trash-alt"></i>
-                                        <form action="{{ route('deleteMovie', $movie->id) }}" method="POST"
-                                            id="delete-form-{{ $movie->id }}" class="d-none">
+                                        <form action="{{ route('deleteProduct', $product->id) }}" method="POST"
+                                            id="delete-form-{{ $product->id }}" class="d-none">
                                             @csrf
                                             @method('DELETE')
                                         </form>
@@ -85,7 +84,7 @@
                 </table>
             @else
                 <div class="alert alert-warning mt-3">
-                    Movie masih kosong nih :(
+                    Product masih kosong nih :(
                 </div>
             @endif
         </div>

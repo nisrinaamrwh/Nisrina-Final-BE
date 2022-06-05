@@ -16,6 +16,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone'
     ];
 
     protected $hidden = [
@@ -27,9 +28,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function movie()
+    public function product()
     {
         // return $this->hasMany('Nama Model', 'foreign_key => user_id ditable movie');
-        return $this->hasMany('App\Models\Movie', 'user_id');
+        return $this->hasMany('App\Models\Product', 'user_id');
     }
 }

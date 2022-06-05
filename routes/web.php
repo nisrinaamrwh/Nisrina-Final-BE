@@ -17,7 +17,7 @@ Route::get('/', 'App\Http\Controllers\PageController@index');
 Auth::routes();
 
 // PAGES
-Route::get('/movie', 'App\Http\Controllers\MovieController@index');
+Route::get('/product', 'App\Http\Controllers\ProductController@index');
 
 // ROUTES KLO UDAH LOGIN
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -27,14 +27,14 @@ Route::group(['middleware' => 'RoleAdmin'], function () {
     Route::get('/admin', 'App\Http\Controllers\HomeController@admin');
 
     // 1. Genre
-    Route::get('/genre', 'App\Http\Controllers\GenreController@index');
-    Route::post('/genre', 'App\Http\Controllers\GenreController@store')->name('storeGenre');
-    Route::get('/genre/{id}', 'App\Http\Controllers\GenreController@edit')->name('editGenre');
-    Route::put('/genre/{id}', 'App\Http\Controllers\GenreController@update')->name('updateGenre');
-    Route::delete('/genre/{id}', 'App\Http\Controllers\GenreController@delete')->name('deleteGenre');
+    Route::get('/category', 'App\Http\Controllers\CategoryController@index');
+    Route::post('/category', 'App\Http\Controllers\CategoryController@store')->name('storeCategory');
+    Route::get('/category/{id}', 'App\Http\Controllers\CategoryController@edit')->name('editCategory');
+    Route::put('/category/{id}', 'App\Http\Controllers\CategoryController@update')->name('updateCategory');
+    Route::delete('/category/{id}', 'App\Http\Controllers\CategoryController@delete')->name('deletecategory');
 
     // 2. Accept Movie
-    Route::put('/movie/accept/{id}', 'App\Http\Controllers\MovieController@acceptMovie')->name('acceptMovie');
+    Route::put('/product/accept/{id}', 'App\Http\Controllers\ProductController@acceptProduct')->name('acceptProduct');
 });
 
 // MEMBER ROUTES
@@ -42,8 +42,8 @@ Route::group(['middleware' => 'RoleMember'], function () {
     Route::get('/member', 'App\Http\Controllers\HomeController@member');
 
     // 2. Movie
-    Route::post('/movie', 'App\Http\Controllers\MovieController@store')->name('storeMovie');
-    Route::get('/movie/{id}', 'App\Http\Controllers\MovieController@edit')->name('editMovie');
-    Route::put('/movie/{id}', 'App\Http\Controllers\MovieController@update')->name('updateMovie');
-    Route::delete('/movie/{id}', 'App\Http\Controllers\MovieController@delete')->name('deleteMovie');
+    Route::post('/product', 'App\Http\Controllers\ProductController@store')->name('storeProduct');
+    Route::get('/product/{id}', 'App\Http\Controllers\ProductController@edit')->name('editProduct');
+    Route::put('/product/{id}', 'App\Http\Controllers\ProductController@update')->name('updateProduct');
+    Route::delete('/product/{id}', 'App\Http\Controllers\ProductController@delete')->name('deleteProduct');
 });

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Genre extends Model
+class Category extends Model
 {
     use HasFactory;
 
@@ -15,9 +15,9 @@ class Genre extends Model
     // Kebalikan dari fillable
     // protected $guarded = ['id'];
 
-    public function movie()
+    public function product()
     {
         // return $this->hasMany('Nama Model', 'foreign_key => genre_id ditable movie');
-        return $this->hasMany('App\Models\Movie', 'genre_id');
+        return $this->hasMany('App\Models\Product', 'genre_id');
     }
 }
